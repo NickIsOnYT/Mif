@@ -2,6 +2,8 @@
 
 A small C# WPF app for Windows that builds videos or animated GIFs from a sequence of images, with GIF-style controls.
 
+I'm not a programmer, so this whole thing was vibe-coded.
+
 ## Features
 
 - **Frame stack**: Add multiple images (PNG, JPG, BMP, GIF, TIFF), reorder with ↑/↓, remove or clear.
@@ -9,16 +11,11 @@ A small C# WPF app for Windows that builds videos or animated GIFs from a sequen
 - **Export as GIF**: Saves an animated GIF using the current frame order and delay.
 - **Export as video**: Saves an MP4 via FFmpeg (same delay = frame duration).
 
-## Build
+## Build and run
 
 ```bash
 dotnet restore
 dotnet build
-```
-
-Run:
-
-```bash
 dotnet run
 ```
 
