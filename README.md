@@ -2,7 +2,7 @@
 
 A small C# WPF app for Windows that builds videos or animated GIFs from a sequence of images, with GIF-style controls.
 
-I'm not a programmer, so this whole thing was vibe-coded.
+I'm not a programmer, so this whole thing was vibe-coded using [Cursor](https://cursor.com/home).
 
 ## Features
 
@@ -25,7 +25,7 @@ Or run `bin\Debug\net8.0-windows\Mif.exe` after building.
 
 Video export uses **FFmpeg**. Either:
 
-1. Install [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH, or  
+1. Install [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH, or
 2. Place `ffmpeg.exe` in the same folder as `Mif.exe`.
 
 Without FFmpeg, video export will show an error; GIF export does not need FFmpeg.
