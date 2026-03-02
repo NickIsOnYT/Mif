@@ -3,7 +3,6 @@
 A small C# WPF app for Windows that makes videos or animated GIFs from a sequence of images, with GIF-style controls.
 
 I'm not a programmer, so this whole thing was vibe-coded using [Cursor](https://cursor.com/home).
-=======
 
 ## Features
 
