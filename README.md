@@ -1,6 +1,6 @@
 # Mif – Image sequence to video / GIF
 
-A small C# WPF app for Windows that builds videos or animated GIFs from a sequence of images, with GIF-style controls.
+A small C# WPF app for Windows that makes videos or animated GIFs from a sequence of images, with GIF-style controls.
 
 ## Features
 
