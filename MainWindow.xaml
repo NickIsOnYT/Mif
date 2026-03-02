@@ -60,8 +60,14 @@
                                     <TextBox Grid.Column="2" Text="{Binding DelayOverrideText, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
                                              Margin="0,0,8,0" Padding="4,2" Width="50" ToolTip="Frame delay (1/100 s); leave empty for default"/>
                                     <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
-                                        <Button Content="↑" Width="28" Padding="2" Margin="0,0,2,0" Tag="{Binding}" Click="BtnMoveUp_Click"/>
-                                        <Button Content="↓" Width="28" Padding="2" Margin="0,0,2,0" Tag="{Binding}" Click="BtnMoveDown_Click"/>
+                                        <TextBox Width="40"
+                                                 Margin="0,0,4,0"
+                                                 Padding="4,2"
+                                                 Text="{Binding Position, UpdateSourceTrigger=LostFocus}"
+                                                 Tag="{Binding}"
+                                                 ToolTip="Frame position (1 = first). Change to move frame."
+                                                 LostFocus="FramePosition_LostFocus"
+                                                 PreviewKeyDown="FramePosition_PreviewKeyDown"/>
                                         <Button Content="✕" Width="28" Padding="2" Tag="{Binding}" Click="BtnRemoveThisFrame_Click" ToolTip="Remove this frame"/>
                                     </StackPanel>
                                 </Grid>

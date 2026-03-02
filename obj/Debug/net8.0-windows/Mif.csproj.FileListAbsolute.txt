@@ -20,3 +20,4 @@ C:\Users\nicks\Documents\Coding\Mif\obj\Debug\net8.0-windows\Mif.genruntimeconfi
 C:\Users\nicks\Documents\Coding\Mif\obj\Debug\net8.0-windows\ref\Mif.dll
 C:\Users\nicks\Documents\Coding\Mif\obj\Debug\net8.0-windows\AdvancedSettingsWindow.baml
 C:\Users\nicks\Documents\Coding\Mif\obj\Debug\net8.0-windows\AdvancedSettingsWindow.g.cs
+C:\Users\nicks\Documents\Coding\Mif\obj\Debug\net8.0-windows\Mif.sourcelink.json

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using System.Windows.Input;
 using Microsoft.Win32;
 using Mif.Helpers;
 using Button = System.Windows.Controls.Button;
@@ -52,6 +53,38 @@ public partial class MainWindow
         BtnClear.IsEnabled = hasFrames;
         BtnExportGif.IsEnabled = hasFrames;
         BtnExportVideo.IsEnabled = hasFrames;
+        RenumberFrames();
+    }
+
+    private void RenumberFrames()
+    {
+        for (int i = 0; i < _frames.Count; i++)
+        {
+            _frames[i].Position = i + 1;
+        }
+    }
+
+    private static IEnumerable<string> SortFilesNaturally(IEnumerable<string> paths)
+    {
+        return paths
+            .Select(p =>
+            {
+                string name = Path.GetFileNameWithoutExtension(p);
+                int i = name.Length - 1;
+                while (i >= 0 && char.IsDigit(name[i])) i--;
+                string prefix = name.Substring(0, i + 1);
+                int number = int.MaxValue;
+                if (i < name.Length - 1)
+                {
+                    string numStr = name[(i + 1)..];
+                    if (!int.TryParse(numStr, out number)) number = int.MaxValue;
+                }
+                return new { Path = p, Prefix = prefix, Number = number, Name = name };
+            })
+            .OrderBy(x => x.Prefix, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(x => x.Number)
+            .ThenBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
+            .Select(x => x.Path);
     }
 
     private void AdvancedSettings_Click(object sender, RoutedEventArgs e)
@@ -74,9 +107,9 @@ public partial class MainWindow
         if (dlg.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
 
         string[] imageExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tiff", ".tif" };
-        var files = Directory.GetFiles(dlg.SelectedPath)
-            .Where(p => imageExtensions.Contains(Path.GetExtension(p).ToLowerInvariant()))
-            .OrderBy(Path.GetFileName, StringComparer.OrdinalIgnoreCase)
+        var files = SortFilesNaturally(
+                Directory.GetFiles(dlg.SelectedPath)
+                    .Where(p => imageExtensions.Contains(Path.GetExtension(p).ToLowerInvariant())))
             .ToArray();
 
         if (files.Length == 0)
@@ -98,6 +131,7 @@ public partial class MainWindow
                 MessageBox.Show($"Could not load: {path}\n\n{ex.Message}", "Load error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+        RenumberFrames();
         UpdateEmptyState();
         MessageBox.Show($"Imported {files.Length} image(s).", "Import folder", MessageBoxButton.OK, MessageBoxImage.Information);
     }
@@ -112,7 +146,7 @@ public partial class MainWindow
         };
         if (dlg.ShowDialog() != true) return;
 
-        foreach (string path in dlg.FileNames)
+        foreach (string path in SortFilesNaturally(dlg.FileNames))
         {
             try
             {
@@ -126,6 +160,7 @@ public partial class MainWindow
             }
         }
 
+        RenumberFrames();
         UpdateEmptyState();
     }
 
@@ -134,6 +169,7 @@ public partial class MainWindow
         if (FrameList.SelectedItem is FrameItem item)
         {
             _frames.Remove(item);
+            RenumberFrames();
             UpdateEmptyState();
         }
         else
@@ -145,6 +181,7 @@ public partial class MainWindow
         if (sender is Button btn && btn.Tag is FrameItem item)
         {
             _frames.Remove(item);
+            RenumberFrames();
             UpdateEmptyState();
         }
     }
@@ -169,6 +206,7 @@ public partial class MainWindow
         int idx = _frames.IndexOf(item);
         if (idx <= 0) return;
         _frames.Move(idx, idx - 1);
+        RenumberFrames();
     }
 
     private void BtnMoveDown_Click(object sender, RoutedEventArgs e)
@@ -177,6 +215,51 @@ public partial class MainWindow
         int idx = _frames.IndexOf(item);
         if (idx < 0 || idx >= _frames.Count - 1) return;
         _frames.Move(idx, idx + 1);
+        RenumberFrames();
+    }
+
+    private void ChangeFramePosition(FrameItem item, int newPosition)
+    {
+        if (_frames.Count == 0) return;
+
+        int clamped = Math.Max(1, Math.Min(newPosition, _frames.Count));
+        int oldIndex = _frames.IndexOf(item);
+        int targetIndex = clamped - 1;
+
+        if (oldIndex < 0)
+            return;
+
+        if (oldIndex != targetIndex)
+        {
+            _frames.Move(oldIndex, targetIndex);
+        }
+
+        RenumberFrames();
+        FrameList.SelectedItem = item;
+        FrameList.ScrollIntoView(item);
+    }
+
+    private void FramePosition_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (sender is not System.Windows.Controls.TextBox tb || tb.Tag is not FrameItem item) return;
+
+        string text = tb.Text.Trim();
+        if (!int.TryParse(text, out int newPos))
+        {
+            tb.Text = item.Position.ToString();
+            return;
+        }
+
+        ChangeFramePosition(item, newPos);
+        tb.Text = item.Position.ToString();
+    }
+
+    private void FramePosition_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter) return;
+
+        e.Handled = true;
+        FramePosition_LostFocus(sender, e);
     }
 
     private bool TryGetFrameDelay(out int delayHundredths)
