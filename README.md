@@ -1,6 +1,8 @@
 # Mif – Image sequence to video / GIF
 
-A small C# WPF app for Windows that builds videos or animated GIFs from a sequence of images, with GIF-style controls.
+A small C# WPF app for Windows that makes videos or animated GIFs from a sequence of images, with GIF-style controls.
+
+I'm not a programmer, so this whole thing was vibe-coded using [Cursor](https://cursor.com/home).
 
 ## Features
 
@@ -9,16 +11,11 @@ A small C# WPF app for Windows that builds videos or animated GIFs from a sequen
 - **Export as GIF**: Saves an animated GIF using the current frame order and delay.
 - **Export as video**: Saves an MP4 via FFmpeg (same delay = frame duration).
 
-## Build
+## Build and run
 
 ```bash
 dotnet restore
 dotnet build
-```
-
-Run:
-
-```bash
 dotnet run
 ```
 
@@ -28,7 +25,7 @@ Or run `bin\Debug\net8.0-windows\Mif.exe` after building.
 
 Video export uses **FFmpeg**. Either:
 
-1. Install [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH, or  
+1. Install [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH, or
 2. Place `ffmpeg.exe` in the same folder as `Mif.exe`.
 
 Without FFmpeg, video export will show an error; GIF export does not need FFmpeg.
