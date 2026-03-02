@@ -146,22 +146,7 @@ public partial class MainWindow
         };
         if (dlg.ShowDialog() != true) return;
 
-        foreach (string path in SortFilesNaturally(dlg.FileNames))
-        {
-            try
-            {
-                var (thumbnail, sizeText) = ImageHelper.LoadThumbnail(path, 80, 60);
-                if (thumbnail != null)
-                    _frames.Add(new FrameItem(path, thumbnail, sizeText));
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Could not load image: {path}\n\n{ex.Message}", "Load error", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        RenumberFrames();
-        UpdateEmptyState();
+        AddFramesFromPaths(dlg.FileNames);
     }
 
     private void BtnRemoveFrame_Click(object sender, RoutedEventArgs e)
@@ -260,6 +245,87 @@ public partial class MainWindow
 
         e.Handled = true;
         FramePosition_LostFocus(sender, e);
+    }
+
+    private void AddFramesFromPaths(IEnumerable<string> paths)
+    {
+        foreach (string path in SortFilesNaturally(paths))
+        {
+            try
+            {
+                var (thumbnail, sizeText) = ImageHelper.LoadThumbnail(path, 80, 60);
+                if (thumbnail != null)
+                    _frames.Add(new FrameItem(path, thumbnail, sizeText));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not load image: {path}\n\n{ex.Message}", "Load error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        RenumberFrames();
+        UpdateEmptyState();
+    }
+
+    private void FrameArea_DragEnter(object sender, System.Windows.DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+            e.Effects = System.Windows.DragDropEffects.Copy;
+        else
+            e.Effects = System.Windows.DragDropEffects.None;
+
+        e.Handled = true;
+    }
+
+    private void FrameArea_DragOver(object sender, System.Windows.DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+            e.Effects = System.Windows.DragDropEffects.Copy;
+        else
+            e.Effects = System.Windows.DragDropEffects.None;
+
+        e.Handled = true;
+    }
+
+    private void FrameArea_Drop(object sender, System.Windows.DragEventArgs e)
+    {
+        if (!e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+            return;
+
+        var dropped = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string[] ?? Array.Empty<string>();
+        if (dropped.Length == 0)
+            return;
+
+        string[] imageExtensions = { ".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tiff", ".tif" };
+        var paths = new List<string>();
+
+        foreach (string path in dropped)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
+                    string ext = Path.GetExtension(path).ToLowerInvariant();
+                    if (imageExtensions.Contains(ext))
+                        paths.Add(path);
+                }
+                else if (Directory.Exists(path))
+                {
+                    var files = Directory.GetFiles(path)
+                        .Where(p => imageExtensions.Contains(Path.GetExtension(p).ToLowerInvariant()));
+                    paths.AddRange(files);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Could not read from: {path}\n\n{ex.Message}", "Drop error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        if (paths.Count == 0)
+            return;
+
+        AddFramesFromPaths(paths);
     }
 
     private bool TryGetFrameDelay(out int delayHundredths)

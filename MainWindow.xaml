@@ -38,7 +38,11 @@
                 CornerRadius="4"
                 Background="#16161e"
                 Padding="8"
-                HorizontalAlignment="Stretch">
+                HorizontalAlignment="Stretch"
+                AllowDrop="True"
+                DragEnter="FrameArea_DragEnter"
+                DragOver="FrameArea_DragOver"
+                Drop="FrameArea_Drop">
             <Grid>
                 <TextBlock x:Name="TxtNoFrames" Text="No frames. Click “Add images…” to add pictures."
                            VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -74,33 +78,63 @@
                                         <TextBlock Text="{Binding FileName}" Foreground="#a9b1d6" TextTrimming="CharacterEllipsis"/>
                                         <TextBlock Text="{Binding SizeText}" Foreground="#565f89" FontSize="11"/>
                                     </StackPanel>
-                                    <TextBox Grid.Column="2"
-                                             Text="{Binding DelayOverrideText, UpdateSourceTrigger=LostFocus}"
-                                             VerticalAlignment="Center"
-                                             HorizontalAlignment="Right"
-                                             Margin="0,0,8,0"
-                                             Padding="4,2"
-                                             Width="50"
-                                             ToolTip="Frame delay (1/100 s); leave empty for default"/>
-                                    <StackPanel Grid.Column="3"
-                                                Orientation="Horizontal"
+                                    <StackPanel Grid.Column="2"
                                                 VerticalAlignment="Center"
-                                                HorizontalAlignment="Right">
-                                        <TextBox Width="40"
-                                                 Margin="0,0,4,0"
+                                                HorizontalAlignment="Right"
+                                                Margin="0,0,8,0">
+                                        <TextBlock Text="Frame delay"
+                                                   Foreground="#a9b1d6"
+                                                   FontSize="10"
+                                                   Margin="0,0,0,2"
+                                                   TextAlignment="Right"/>
+                                        <TextBox Text="{Binding DelayOverrideText, UpdateSourceTrigger=LostFocus}"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Right"
                                                  Padding="4,2"
-                                                 Text="{Binding Position, UpdateSourceTrigger=LostFocus}"
-                                                 Tag="{Binding}"
-                                                 ToolTip="Frame position (1 = first). Change to move frame."
-                                                 LostFocus="FramePosition_LostFocus"
-                                                 PreviewKeyDown="FramePosition_PreviewKeyDown"/>
-                                        <Button Content="✕"
-                                                Width="22"
-                                                Padding="2"
+                                                 Width="50"
+                                                 ToolTip="Frame delay (1/100 s); leave empty for default"/>
+                                    </StackPanel>
+                                    <Grid Grid.Column="3"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Right">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Right"
+                                                    Margin="0,0,4,0">
+                                            <TextBlock Text="Frame order"
+                                                       Foreground="#a9b1d6"
+                                                       FontSize="10"
+                                                       Margin="0,0,0,2"
+                                                       TextAlignment="Right"/>
+                                            <TextBox Width="40"
+                                                     Padding="4,2"
+                                                     Text="{Binding Position, UpdateSourceTrigger=LostFocus}"
+                                                     Tag="{Binding}"
+                                                     ToolTip="Frame position (1 = first). Change to move frame."
+                                                     LostFocus="FramePosition_LostFocus"
+                                                     PreviewKeyDown="FramePosition_PreviewKeyDown"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1"
+                                                Content="✕"
+                                                Width="24"
+                                                Height="24"
+                                                MinWidth="24"
+                                                MinHeight="24"
+                                                MaxWidth="24"
+                                                MaxHeight="24"
+                                                Margin="4,0,0,0"
+                                                Padding="0"
+                                                FontSize="14"
+                                                HorizontalContentAlignment="Center"
+                                                VerticalContentAlignment="Center"
                                                 Tag="{Binding}"
                                                 Click="BtnRemoveThisFrame_Click"
                                                 ToolTip="Remove this frame"/>
-                                    </StackPanel>
+                                    </Grid>
                                 </Grid>
                             </Border>
                         </DataTemplate>
