@@ -32,34 +32,60 @@
         </StackPanel>
 
         <!-- Frame stack -->
-        <Border Grid.Row="2" BorderBrush="#3b4261" BorderThickness="1" CornerRadius="4" Background="#16161e" Padding="8">
+        <Border Grid.Row="2"
+                BorderBrush="#3b4261"
+                BorderThickness="1"
+                CornerRadius="4"
+                Background="#16161e"
+                Padding="8"
+                HorizontalAlignment="Stretch">
             <Grid>
                 <TextBlock x:Name="TxtNoFrames" Text="No frames. Click “Add images…” to add pictures."
                            VerticalAlignment="Center" HorizontalAlignment="Center"
                            Foreground="#565f89" FontSize="14"/>
-                <ListBox x:Name="FrameList" Visibility="Collapsed"
+                <ListBox x:Name="FrameList"
+                         Visibility="Collapsed"
                          BorderThickness="0" Background="Transparent"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         HorizontalContentAlignment="Stretch"
                          SelectionChanged="FrameList_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="#24283b" CornerRadius="4" Padding="8" Margin="0,2">
+                            <Border Background="#24283b"
+                                    CornerRadius="4"
+                                    Padding="8"
+                                    Margin="0,2"
+                                    HorizontalAlignment="Stretch">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="70"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Source="{Binding Thumbnail}" Stretch="Uniform" MaxHeight="60" MaxWidth="80"/>
+                                    <Image Grid.Column="0"
+                                           Source="{Binding Thumbnail}"
+                                           Stretch="Uniform"
+                                           MaxHeight="60"
+                                           MaxWidth="80"
+                                           Margin="0,0,8,0"/>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0">
                                         <TextBlock Text="{Binding FileName}" Foreground="#a9b1d6" TextTrimming="CharacterEllipsis"/>
                                         <TextBlock Text="{Binding SizeText}" Foreground="#565f89" FontSize="11"/>
                                     </StackPanel>
-                                    <TextBox Grid.Column="2" Text="{Binding DelayOverrideText, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center"
-                                             Margin="0,0,8,0" Padding="4,2" Width="50" ToolTip="Frame delay (1/100 s); leave empty for default"/>
-                                    <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBox Grid.Column="2"
+                                             Text="{Binding DelayOverrideText, UpdateSourceTrigger=LostFocus}"
+                                             VerticalAlignment="Center"
+                                             HorizontalAlignment="Right"
+                                             Margin="0,0,8,0"
+                                             Padding="4,2"
+                                             Width="50"
+                                             ToolTip="Frame delay (1/100 s); leave empty for default"/>
+                                    <StackPanel Grid.Column="3"
+                                                Orientation="Horizontal"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Right">
                                         <TextBox Width="40"
                                                  Margin="0,0,4,0"
                                                  Padding="4,2"
@@ -68,7 +94,12 @@
                                                  ToolTip="Frame position (1 = first). Change to move frame."
                                                  LostFocus="FramePosition_LostFocus"
                                                  PreviewKeyDown="FramePosition_PreviewKeyDown"/>
-                                        <Button Content="✕" Width="28" Padding="2" Tag="{Binding}" Click="BtnRemoveThisFrame_Click" ToolTip="Remove this frame"/>
+                                        <Button Content="✕"
+                                                Width="22"
+                                                Padding="2"
+                                                Tag="{Binding}"
+                                                Click="BtnRemoveThisFrame_Click"
+                                                ToolTip="Remove this frame"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
