@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mif")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e4b06e3b1aa444bf87566cfb356f70a90791a06e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3faf947c0970f8e601bdefdf69fe08c11060df07")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mif")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mif")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
