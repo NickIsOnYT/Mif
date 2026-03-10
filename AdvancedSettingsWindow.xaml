@@ -2,12 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Advanced settings"
-        Height="400" Width="480"
+        Height="520" Width="480"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="#1a1b26">
     <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -59,9 +62,16 @@
         </ComboBox>
 
         <CheckBox x:Name="ChkFirstFrameAsBackground" Grid.Row="7" Content="Use first frame as background (GIF)"
+                  Foreground="#a9b1d6" Margin="0,0,0,12" IsChecked="False"/>
+
+        <TextBlock Grid.Row="8" Text="GIF loop count (0 = infinite)" Foreground="#a9b1d6" Margin="0,0,0,6"/>
+        <TextBox x:Name="TxtGifLoopCount" Grid.Row="9" Width="100" Padding="8,6" Margin="0,0,0,12" HorizontalAlignment="Left"
+                 Background="#24283b" Foreground="#a9b1d6" BorderBrush="#3b4261" CaretBrush="#a9b1d6"/>
+
+        <CheckBox x:Name="ChkDontStackFrames" Grid.Row="10" Content="Don't stack frames (clear each frame before drawing)"
                   Foreground="#a9b1d6" Margin="0,0,0,16" IsChecked="False"/>
 
-        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="11" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="OK" Click="Ok_Click" Padding="20,8" Margin="0,0,8,0" IsDefault="True"/>
             <Button Content="Cancel" Click="Cancel_Click" Padding="20,8" IsCancel="True"/>
         </StackPanel>

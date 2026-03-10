@@ -16,7 +16,9 @@ public partial class AdvancedSettingsWindow
             GifColorCount = current.GifColorCount,
             FirstFrameAsBackground = current.FirstFrameAsBackground,
             ExportWidth = current.ExportWidth,
-            ExportHeight = current.ExportHeight
+            ExportHeight = current.ExportHeight,
+            GifLoopCount = current.GifLoopCount,
+            DontStackFrames = current.DontStackFrames
         };
         TxtDefaultFolder.Text = Settings.DefaultExportFolder;
         ChkUseDefaultFolderOnly.IsChecked = Settings.UseDefaultFolderOnly;
@@ -24,6 +26,8 @@ public partial class AdvancedSettingsWindow
         TxtExportWidth.Text = Settings.ExportWidth > 0 ? Settings.ExportWidth.ToString() : "";
         TxtExportHeight.Text = Settings.ExportHeight > 0 ? Settings.ExportHeight.ToString() : "";
         SelectGifColorCombo(Settings.GifColorCount);
+        TxtGifLoopCount.Text = Settings.GifLoopCount.ToString();
+        ChkDontStackFrames.IsChecked = Settings.DontStackFrames;
     }
 
     private void SelectGifColorCombo(int count)
@@ -60,6 +64,9 @@ public partial class AdvancedSettingsWindow
         Settings.ExportHeight = Math.Max(0, h);
         if (CmbGifColors.SelectedItem is System.Windows.Controls.ComboBoxItem cbi && cbi.Tag is string s && int.TryParse(s, out int n))
             Settings.GifColorCount = Math.Clamp(n, 2, 256);
+        if (int.TryParse(TxtGifLoopCount.Text?.Trim(), out int loopCount))
+            Settings.GifLoopCount = Math.Max(0, loopCount);
+        Settings.DontStackFrames = ChkDontStackFrames.IsChecked == true;
         DialogResult = true;
         Close();
     }

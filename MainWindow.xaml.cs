@@ -385,7 +385,8 @@ public partial class MainWindow
             var paths = _frames.Select(f => f.FilePath).ToList();
             var delays = GetPerFrameDelays(delayHundredths);
             GifExport.Export(paths, path, delayHundredths,
-                _settings.GifColorCount, _settings.FirstFrameAsBackground, delays);
+                _settings.GifColorCount, _settings.FirstFrameAsBackground, delays,
+                _settings.GifLoopCount, _settings.DontStackFrames);
             MessageBox.Show($"GIF saved to:\n{path}", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         catch (Exception ex)

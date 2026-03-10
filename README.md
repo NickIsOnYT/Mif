@@ -35,6 +35,10 @@ Without FFmpeg, video export will show an error; GIF export does not need FFmpeg
 - Windows
 - .NET 8.0 (or SDK for building)
 
+## The name
+
+- Mif (said as "Myth") is a combination of MP4 and GIF.
+
 ## Preview
 
 ![Mif3.2](https://github.com/NickIsOnYT/Mif/blob/main/Logo%20thing/Screenshot%20Mif.png)
