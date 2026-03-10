@@ -37,7 +37,7 @@ Without FFmpeg, video export will show an error; GIF export does not need FFmpeg
 
 ## The name
 
-- Mif (said as "Myth") is a combination of MP4 and GIF.
+- Mif (said as "Myth" but it's an "f" instead of a "th") is a combination of MP4 and GIF.
 
 ## Preview
 
